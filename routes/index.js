@@ -3,7 +3,7 @@ const path = require('path')
 
 /* post listing api router */
 router.get('/', (req, res) => {
-    res.send(path.join(__dirname = '/client/build/index.html'))
+    res.send(path.join(__dirname = 'client/build/index.html'))
 })
 
 /* dashboard */

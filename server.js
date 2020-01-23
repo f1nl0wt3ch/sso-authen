@@ -30,6 +30,7 @@ mongoose.connect(key.dbURI, {
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '/client/build')))
+console.log(path.join(__dirname, '/client/build'))
 
 /* Setup session and cookies */
 app.use(cookieSession({
