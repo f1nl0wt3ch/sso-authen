@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import NavigationComponent from '../NavigationComponent'
 import FooterComponent from '../FooterComponent'
+import LoginFormComponent from '../login/LoginFormComponent'
 
 const useStyles = makeStyles(theme => ({
    root: {
@@ -22,6 +23,7 @@ export default (props) => {
    return (
       <div className={classes.root}>
          <NavigationComponent />
+         <LoginFormComponent />
          <FooterComponent />
       </div>
    )

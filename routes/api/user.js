@@ -1,12 +1,24 @@
 const router = require('express').Router(),
-      User = require('../model/UserModel'),
+      User = require('../../model/UserModel'),
       bcrypt = require('bcryptjs'),
       path = require('path')
 const { 
     capitalCase
 } = require('change-case')
 
-/* post signup */
+/* find all users from databases */
+router.get('/api/users', (req, res) => {
+    User.find({}, (err, data) => {
+        res.json(data)
+    })
+})
+
+/* find user from database by username/email */
+router.get('/user/:id', (req, res) => {
+    res.send("Ok")
+})
+
+/* insert a new user */
 router.post('/api/signup', (req, res) => {
     const {firstName, lastName, email, password} = req.body
 
@@ -42,9 +54,5 @@ router.post('/api/signup', (req, res) => {
     })
 })
 
-/* get signup */
-router.get('/api/signup', (req, res) => {
-    res.send("Ok")
-})
 
 module.exports = router

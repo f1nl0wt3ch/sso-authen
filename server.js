@@ -62,23 +62,19 @@ require('./config/passport')('google', passport)
 
 // Routes
 const clientRoute = require('./routes/client.js'),
-      loginRoute = require('./routes/login.js'),
-      signupRoute = require('./routes/signup.js'),
-      usersRoute = require('./routes/users.js'),
-      postsRoute = require('./routes/posts.js'),
-      facebookRoute = require('./routes/auth/facebook.js'),
-      linkedinRoute = require('./routes/auth/linkedin.js'),
-      localRoute = require('./routes/auth/local.js'),
-      googleRoute = require('./routes/auth/google.js')
+      userApiRoute = require('./routes/api/user.js'),
+      postApiRoute = require('./routes/api/post.js'),
+      facebookAuthRoute = require('./routes/auth/facebook.js'),
+      linkedinAuthRoute = require('./routes/auth/linkedin.js'),
+      localAuthRoute = require('./routes/auth/local.js'),
+      googleAuthRoute = require('./routes/auth/google.js')
 app.use(clientRoute)
-app.use(signupRoute)
-app.use(loginRoute)
-app.use(usersRoute)
-app.use(postsRoute)
-app.use(facebookRoute)
-app.use(googleRoute)
-app.use(linkedinRoute)
-app.use(localRoute)
+app.use(userApiRoute)
+app.use(postApiRoute)
+app.use(facebookAuthRoute)
+app.use(googleAuthRoute)
+app.use(linkedinAuthRoute)
+app.use(localAuthRoute)
 
 const PORT = process.env.SERVER_PORT || 5000
 app.listen(PORT, () => {

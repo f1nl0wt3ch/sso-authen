@@ -88,8 +88,8 @@ export default function LoginFormComponent(props) {
 }
 
 const handleLoginClick = e => {
-  console.log("button clicked!")
-  fetch('/api/login', {
+  e.preventDefault()
+  fetch('/auth/local/login', {
     method: 'POST',
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -102,6 +102,7 @@ const handleLoginClick = e => {
   })
     .then(res => res.json())
     .then(result => {
+      console.log(`Login result: ${result}`)
       setMessage(result.message)
       if (result.success) {
         setLogin(true)
@@ -118,7 +119,7 @@ return (
       </Typography>) : (
         <Grid container justify="center" >
           <Grid item className={classes.container}>
-            <form autoComplete="off" >
+            <form autoComplete="off" action="/auth/local/login" method="POST">
               <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                   <LockOutlinedIcon />
@@ -137,7 +138,7 @@ return (
                     >
                     </TextField>
                   )}
-                <TextField className={classes.textField} id="username" label="Username" variant="outlined" type="text" onChange={handleUsernameChange} />
+                <TextField className={classes.textField} id="username" name="username" label="Username" variant="outlined" type="text" onChange={handleUsernameChange} />
                 {
                   (!errorUsername) ? ("") : (
                     <Typography color="error" variant="subtitle1" align="left">
@@ -145,7 +146,7 @@ return (
                     </Typography>
                   )
                 }
-                <TextField className={classes.textField} id="password" label="Password" variant="outlined" type="password" onChange={handlePasswordChange} />
+                <TextField className={classes.textField} id="password" name="password" label="Password" variant="outlined" type="password" onChange={handlePasswordChange} />
                 {
                   (!errorPassword) ? ("") : (
                     <Typography color="error" variant="subtitle1" align="left">
@@ -158,7 +159,7 @@ return (
                 </Typography>
                 <Button variant="outlined" size="large" color="primary" onClick={handleLoginClick}>
                   Login
-                    </Button>
+                </Button>
               </div>
             </form>
           </Grid>
