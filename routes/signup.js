@@ -6,11 +6,6 @@ const {
     capitalCase
 } = require('change-case')
 
-/* get */
-/*router.get('/signup', (req, res) => {
-    res.send(path.join(__dirname = '../build/index.html'))
-})*/
-
 /* post signup */
 router.post('/api/signup', (req, res) => {
     const {firstName, lastName, email, password} = req.body

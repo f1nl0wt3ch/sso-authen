@@ -1,5 +1,5 @@
-const passport = require('passport');
-const router = require('express').Router();
+const passport = require('passport')
+const router = require('express').Router()
 
 router.post('/api/auth/local', passport.authenticate('local', {
   successRedirect: '/dashboard',
@@ -13,4 +13,4 @@ router.post('/api/auth/local', passport.authenticate('local', {
     res.send("Check Login API called!")
   })
 
-module.exports = router;
+module.exports = router

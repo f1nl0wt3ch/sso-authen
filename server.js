@@ -29,7 +29,7 @@ mongoose.connect(key.dbURI, {
 .catch(error => console.log(error))
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '/client/build')))
+app.use('/static',express.static(path.join(__dirname, '/client/build/static')))
 console.log(path.join(__dirname, '/client/build'))
 
 /* Setup session and cookies */
@@ -61,17 +61,19 @@ require('./config/passport')('linkedin', passport)
 require('./config/passport')('google', passport)
 
 // Routes
-const indexRoute = require('./routes/index.js'),
+const clientRoute = require('./routes/client.js'),
       loginRoute = require('./routes/login.js'),
       signupRoute = require('./routes/signup.js'),
+      usersRoute = require('./routes/users.js'),
       postsRoute = require('./routes/posts.js'),
       facebookRoute = require('./routes/auth/facebook.js'),
       linkedinRoute = require('./routes/auth/linkedin.js'),
       localRoute = require('./routes/auth/local.js'),
       googleRoute = require('./routes/auth/google.js')
-app.use(indexRoute)
+app.use(clientRoute)
 app.use(signupRoute)
 app.use(loginRoute)
+app.use(usersRoute)
 app.use(postsRoute)
 app.use(facebookRoute)
 app.use(googleRoute)

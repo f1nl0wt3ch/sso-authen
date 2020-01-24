@@ -7,6 +7,7 @@ import LoginPageComponent from './components/login/LoginPageComponent'
 import DashboardPageComponent from './components/dashboard/DashboardPageComponent'
 import SignupPageComponent from './components/signup/SignupPageComponent'
 import HomePageComponent from './components/home/HomePageComponent'
+import AdminPageComponent from './components/admin/AdminPageComponent'
 
 export default class App extends React.Component {
 
@@ -18,6 +19,7 @@ export default class App extends React.Component {
           <Route path="/login"  component={LoginPageComponent} />
           <Route path="/signup"  component={SignupPageComponent} />
           <Route path="/dashboard"  component={DashboardPageComponent} />
+          <Route path="/admin"  component={AdminPageComponent} />
         </Switch>
       </div>
     )

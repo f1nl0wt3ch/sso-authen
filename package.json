@@ -7,7 +7,7 @@
     "start": "node server.js",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "killnode": "sudo killall node",
-    "dev": "concurrently \"npm start\" \"cd client && npm start\"",
+    "dev": "concurrently \"npm run nodemon\" \"cd client && npm start\"",
     "nodemon": "nodemon server.js"
   },
   "keywords": [],
