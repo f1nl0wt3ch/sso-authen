@@ -15,11 +15,11 @@ export default class App extends React.Component {
     const App = () => (
       <div>
         <Switch>
-          <Route path="/" exact component={HomePageComponent} />
-          <Route path="/login"  component={LoginPageComponent} />
-          <Route path="/signup"  component={SignupPageComponent} />
-          <Route path="/dashboard"  component={DashboardPageComponent} />
-          <Route path="/admin"  component={AdminPageComponent} />
+          <Route path="/" exact component={() => <HomePageComponent />} />
+          <Route path="/login"  component={() => <LoginPageComponent />} />
+          <Route path="/signup"  component={() => <SignupPageComponent />} />
+          <Route path="/dashboard"  component={() => <DashboardPageComponent />} />
+          <Route path="/admin"  component={() => <AdminPageComponent />} />
         </Switch>
       </div>
     )

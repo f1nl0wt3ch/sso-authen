@@ -1,6 +1,7 @@
 const path = require('path'),
       express = require('express'),
       cookieSession = require('cookie-session'),
+      cookieParser = require('cookie-parser')
       bodyParser = require('body-parser'),
       cors = require('cors'),
       passport = require('passport'),
@@ -32,6 +33,7 @@ mongoose.connect(key.dbURI, {
 app.use('/static',express.static(path.join(__dirname, '/client/build/static')))
 console.log(path.join(__dirname, '/client/build'))
 
+app.use(cookieParser())
 /* Setup session and cookies */
 app.use(cookieSession({
    name: 'session',

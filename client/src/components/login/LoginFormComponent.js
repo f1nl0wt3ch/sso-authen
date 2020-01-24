@@ -60,110 +60,80 @@ export default function LoginFormComponent(props) {
   const classes = useStyles()
   const [username, setUsername] = React.useState(null)
   const [password, setPassword] = React.useState(null)
-  const [errorUsername, setErrorUsername] = React.useState(null)
-  const [errorPassword, setErrorPassword] = React.useState(null)
-  const [login, setLogin] = React.useState(false)
-  const [message, setMessage] = React.useState("")
+  const messages = React.useState([])
+  const [success, setSuccess] = React.useState(false)
 
   const handleUsernameChange = event => {
     setUsername(event.target.value)
-    if (!validator.isEmail(event.target.value)) {
-      setErrorUsername("* Username is incorrect.")
+    /*if (!validator.isLength(username, { min: 6 })) {
+      messages.push("* Password length should be at least 6 characters.")
     } else {
-      setErrorUsername(null)
-    }
+      messages.pop()
+    }*/
   }
 
   const handlePasswordChange = event => {
     setPassword(event.target.value)
-    if (!validator.isLength(event.target.value, { min: 6 })) {
-      setErrorPassword("* Password length should be at least 6 characters.")
+    /*if (!validator.isEmail(password)) {
+      messages.push("* Username is incorrect.")
     } else {
-      setErrorPassword(null)
-    }
+      messages.pop()
+    }*/
   }
 
   const handleServiceClick = event => {
-    window.location.href = "/api/auth/"+event.target.name.toLowerCase()
-}
+    window.location.href = "/api/auth/" + event.target.name.toLowerCase()
+  }
 
-const handleLoginClick = e => {
-  e.preventDefault()
-  fetch('/auth/local/login', {
-    method: 'POST',
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'DELETE, POST, GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify({ username, password })
-  })
-    .then(res => res.json())
-    .then(result => {
-      console.log(`Login result: ${result}`)
-      setMessage(result.message)
-      if (result.success) {
-        setLogin(true)
-      }
-    })
-    .catch(err => console.log(err))
-}
+  const handleLoginClick = e => {
+    if (!success) {
+      fetch('/auth/local/login', {
+        method: 'POST',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'DELETE, POST, GET, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+        .then(res => res.json())
+        .then(result => {
+          console.log(`${JSON.stringify(result)}`)
+        })
+        .catch(err => console.log(err))
+    }
+  }
 
-return (
-  <React.Fragment >
-    {login ?
-      (<Typography variant="h5" align="center" color="primary">
-        {message}
-      </Typography>) : (
-        <Grid container justify="center" >
-          <Grid item className={classes.container}>
-            <form autoComplete="off" action="/auth/local/login" method="POST">
-              <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                  <LockOutlinedIcon />
-                </Avatar>
-                {
-                  SERVICE_MAP.map((service, index) =>
-                    <TextField
-                      className={classes.button}
-                      color="secondary"
-                      key={index}
-                      value={service}
-                      name={service}
-                      variant="outlined"
-                      type="button"
-                      onClick={handleServiceClick}
-                    >
-                    </TextField>
-                  )}
-                <TextField className={classes.textField} id="username" name="username" label="Username" variant="outlined" type="text" onChange={handleUsernameChange} />
-                {
-                  (!errorUsername) ? ("") : (
-                    <Typography color="error" variant="subtitle1" align="left">
-                      {errorUsername}
-                    </Typography>
-                  )
-                }
-                <TextField className={classes.textField} id="password" name="password" label="Password" variant="outlined" type="password" onChange={handlePasswordChange} />
-                {
-                  (!errorPassword) ? ("") : (
-                    <Typography color="error" variant="subtitle1" align="left">
-                      {errorPassword}
-                    </Typography>
-                  )
-                }
-                <Typography variant="subtitle1" align="center" color="error">
-                  {message}
-                </Typography>
-                <Button variant="outlined" size="large" color="primary" onClick={handleLoginClick}>
-                  Login
-                </Button>
-              </div>
-            </form>
-          </Grid>
+  return (
+      <Grid container justify="center" >
+        <Grid item className={classes.container}>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            {
+              SERVICE_MAP.map((service, index) =>
+                <TextField
+                  className={classes.button}
+                  color="secondary"
+                  key={index}
+                  value={service}
+                  name={service}
+                  variant="outlined"
+                  type="button"
+                  onClick={handleServiceClick}
+                >
+                </TextField>
+              )}
+              <TextField className={classes.textField} id="username" name="username" label="Username" variant="outlined" type="text" onChange={handleUsernameChange} />
+              <TextField className={classes.textField} id="password" name="password" label="Password" variant="outlined" type="password" onChange={handlePasswordChange} />
+              <Button variant="outlined" size="large" color="primary" onClick={handleLoginClick}>
+                Login
+              </Button>
+          </div>
         </Grid>
-      )}
-  </React.Fragment>)
+      </Grid>
+  )
 }

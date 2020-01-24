@@ -1,13 +1,14 @@
 const router = require('express').Router(),
       User = require('../../model/UserModel'),
       bcrypt = require('bcryptjs'),
-      path = require('path')
+      verifyToken = require('../../config/verify-token')
 const { 
     capitalCase
 } = require('change-case')
 
+
 /* find all users from databases */
-router.get('/api/users', (req, res) => {
+router.get('/api/users', verifyToken, (req, res, next) => {
     User.find({}, (err, data) => {
         res.json(data)
     })

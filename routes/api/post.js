@@ -1,12 +1,12 @@
 const router = require('express').Router()
 const { ensureAuthenticated, forwardAuthenticated } = require('../../config/auth')
+const verifyToken = require('../../config/verify-token')
 
 /*require hard coding data*/
-const posts = require('../../controller/PostController').posts
+const posts = require('../../fakeapi/data').posts
 
 /* post listing api router */
-router.get('/api/posts', (req, res) => {
-  //console.log(`All posts: ${JSON.stringify(posts)}`)
+router.get('/api/posts', verifyToken, (req, res, next) => {
   res.json(posts)
 })
 
