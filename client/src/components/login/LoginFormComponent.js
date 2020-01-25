@@ -60,8 +60,8 @@ export default function LoginFormComponent(props) {
   const classes = useStyles()
   const [username, setUsername] = React.useState(null)
   const [password, setPassword] = React.useState(null)
-  const messages = React.useState([])
-  const [success, setSuccess] = React.useState(false)
+  const [auth, setAuth] = React.useState(false)
+  const [token, setToken] = React.useState(null)
 
   const handleUsernameChange = event => {
     setUsername(event.target.value)
@@ -85,8 +85,8 @@ export default function LoginFormComponent(props) {
     window.location.href = "/api/auth/" + event.target.name.toLowerCase()
   }
 
-  const handleLoginClick = e => {
-    if (!success) {
+  const handleOnSubmit = e => {
+    if (!auth) {
       fetch('/auth/local/login', {
         method: 'POST',
         headers: {
@@ -101,39 +101,41 @@ export default function LoginFormComponent(props) {
         .then(res => res.json())
         .then(result => {
           console.log(`${JSON.stringify(result)}`)
+          setAuth(result.auth)
+          setToken(result.token)
         })
         .catch(err => console.log(err))
     }
   }
 
   return (
-      <Grid container justify="center" >
-        <Grid item className={classes.container}>
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            {
-              SERVICE_MAP.map((service, index) =>
-                <TextField
-                  className={classes.button}
-                  color="secondary"
-                  key={index}
-                  value={service}
-                  name={service}
-                  variant="outlined"
-                  type="button"
-                  onClick={handleServiceClick}
-                >
-                </TextField>
-              )}
-              <TextField className={classes.textField} id="username" name="username" label="Username" variant="outlined" type="text" onChange={handleUsernameChange} />
-              <TextField className={classes.textField} id="password" name="password" label="Password" variant="outlined" type="password" onChange={handlePasswordChange} />
-              <Button variant="outlined" size="large" color="primary" onClick={handleLoginClick}>
-                Login
-              </Button>
-          </div>
-        </Grid>
+    <Grid container justify="center" >
+      <Grid item className={classes.container}>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          {
+            SERVICE_MAP.map((service, index) =>
+              <TextField
+                className={classes.button}
+                color="secondary"
+                key={index}
+                value={service}
+                name={service}
+                variant="outlined"
+                type="button"
+                onClick={handleServiceClick}
+              >
+              </TextField>
+            )}
+            <TextField className={classes.textField} id="username" name="username" label="Username" variant="outlined" type="text" onChange={handleUsernameChange} />
+            <TextField className={classes.textField} id="password" name="password" label="Password" variant="outlined" type="password" onChange={handlePasswordChange} />
+            <Button variant="outlined" type="submit" size="large" color="primary" onClick={handleOnSubmit}>
+              Login
+            </Button>
+        </div>
       </Grid>
+    </Grid>
   )
 }

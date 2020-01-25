@@ -1,4 +1,5 @@
 const path = require('path'),
+      dotenv = require('dotenv')
       express = require('express'),
       cookieSession = require('cookie-session'),
       cookieParser = require('cookie-parser')
@@ -9,7 +10,7 @@ const path = require('path'),
       mongoose = require('mongoose')
       key = require('./config/key.js')
 
-
+dotenv.config()
 const app = new express()
 
 /*configure cors middleware*/
@@ -78,7 +79,7 @@ app.use(googleAuthRoute)
 app.use(linkedinAuthRoute)
 app.use(localAuthRoute)
 
-const PORT = process.env.SERVER_PORT || 5000
+const PORT = process.env.PORT || 80
 app.listen(PORT, () => {
   console.log(`Server started successfully at ${PORT}!`)
 })
