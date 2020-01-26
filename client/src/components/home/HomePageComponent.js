@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import NavigationComponent from '../NavigationComponent'
 import FooterComponent from '../FooterComponent'
-import LoginFormComponent from '../login/LoginFormComponent'
+import PostsListingComponent from './PostsListingComponent'
 
 const useStyles = makeStyles(theme => ({
    root: {
@@ -23,7 +23,7 @@ export default (props) => {
    return (
       <div className={classes.root}>
          <NavigationComponent />
-         <LoginFormComponent />
+         <PostsListingComponent authObj={props.authObj}/> 
          <FooterComponent />
       </div>
    )

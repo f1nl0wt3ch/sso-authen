@@ -9,6 +9,7 @@ const {
 
 /* find all users from databases */
 router.get('/api/users', verifyToken, (req, res, next) => {
+    console.log(`User id: ${req.userid}`)
     User.find({}, (err, data) => {
         res.json(data)
     })

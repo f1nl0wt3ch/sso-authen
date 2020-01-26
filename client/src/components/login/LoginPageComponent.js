@@ -10,12 +10,12 @@ const useStyles = makeStyles(theme => ({
    }
 }))
 
-export default (props) => {
+export default ({handleAuthenticated}) => {
    const classes = useStyles()
    return (
       <div className={classes.root}>
          <NavigationComponent />
-         <LoginFormComponent />
+         <LoginFormComponent handleAuthenticated={handleAuthenticated}/>
          <FooterComponent />
       </div>
    )

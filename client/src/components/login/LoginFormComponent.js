@@ -56,12 +56,10 @@ const SERVICE_MAP = [
   "Google"
 ]
 
-export default function LoginFormComponent(props) {
+export default function LoginFormComponent({handleAuthenticated}) {
   const classes = useStyles()
   const [username, setUsername] = React.useState(null)
   const [password, setPassword] = React.useState(null)
-  const [auth, setAuth] = React.useState(false)
-  const [token, setToken] = React.useState(null)
 
   const handleUsernameChange = event => {
     setUsername(event.target.value)
@@ -86,7 +84,6 @@ export default function LoginFormComponent(props) {
   }
 
   const handleOnSubmit = e => {
-    if (!auth) {
       fetch('/auth/local/login', {
         method: 'POST',
         headers: {
@@ -99,13 +96,11 @@ export default function LoginFormComponent(props) {
         body: JSON.stringify({ username, password })
       })
         .then(res => res.json())
-        .then(result => {
-          console.log(`${JSON.stringify(result)}`)
-          setAuth(result.auth)
-          setToken(result.token)
+        .then(json => {
+          console.log(`${JSON.stringify(json)}`)
+          handleAuthenticated(json)
         })
         .catch(err => console.log(err))
-    }
   }
 
   return (

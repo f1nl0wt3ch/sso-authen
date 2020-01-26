@@ -8,7 +8,8 @@ const jwt = require('jsonwebtoken')
    jwt.verify(token, secret, (err, decoded) => {
        if(err) 
        return res.status(500).json({auth: false, message: 'Failed to authenticate token.'})
-       req.__id = decoded__id
+       //console.log(`${JSON.stringify(decoded)}`)
+       req.userid = decoded.id
        next()
    })
 }

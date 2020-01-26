@@ -4,17 +4,25 @@ import { Grid } from '@material-ui/core'
 import CircularIndeterminate from '../CircularIndeterminate'
 
 export default class PostsListingComponent extends Component {
-  constructor() {
-     super()
+  constructor(props) {
+     super(props)
      this.state = {
         posts: [],
-        isLoading: false
+        isLoading: false,
+        token: this.props.authObj.token
      }
   }
 
   componentDidMount(){
-     this.setState({ isLoading: true })
-     fetch('/api/posts')
+     this.setState({ 
+        isLoading: true
+     })
+     fetch('/api/posts',{
+        method: "GET",
+        headers: {
+           "x-access-token": this.state.token
+        }
+     })
      .then(rawData => rawData.json())
      .then(jsonData => {
         console.log(`Fetching all posts...${JSON.stringify(jsonData)}`)

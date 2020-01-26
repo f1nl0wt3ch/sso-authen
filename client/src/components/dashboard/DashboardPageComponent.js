@@ -2,7 +2,6 @@ import React from 'react'
 import {
   makeStyles 
 } from '@material-ui/core'
-import PostsListingComponent from '../home/PostsListingComponent'
 import FooterComponent from '../FooterComponent'
 import NavigationComponen from '../NavigationComponent'
 
@@ -16,7 +15,7 @@ export default (props) => {
     return (
       <div className={classes.root}>
          <NavigationComponen />
-         <PostsListingComponent />
+         {"this is dashboard"}
          <FooterComponent />
       </div>
     )
