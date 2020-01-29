@@ -11,13 +11,12 @@ import HomePageComponent from './components/home/HomePageComponent'
 import AdminPageComponent from './components/admin/AdminPageComponent'
 
 export default class App extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.handleAuthenticated = this.handleAuthenticated.bind(this)
     this.state = {
       authObj: {
         auth: false,
-        statusCode: 0,
         token: null,
         msg: ""
       }
@@ -25,6 +24,7 @@ export default class App extends React.Component {
   }
 
   handleAuthenticated = res => {
+    //console.log(`${JSON.stringify(res)}`)
     this.setState({
       authObj: {
         auth: res.auth,
@@ -35,36 +35,16 @@ export default class App extends React.Component {
   }
 
   render() {
-    const App = () => (
-      <div>
-        {
-          this.state.authObj.auth ? (
-            <Switch>
-              <Route path="/" exact component={() => <HomePageComponent authObj={this.state.authObj} />} />
-              <Redirect 
-                  to={{
-                  pathname: "/"
-                }} 
-               />
-              <Route path="/dashboard" component={() => <DashboardPageComponent authObj={this.state.authObj} />} />
-              <Route path="/admin" component={() => <AdminPageComponent authObj={this.state.authObj} />} />
-            </Switch>
-          ) : (
-              <Switch>
-                <Route path="/login" component={() => <LoginPageComponent  handleAuthenticated={this.handleAuthenticated}/>} />
-                <Route path="/signup" component={() => <SignupPageComponent />} />
-                <Redirect 
-                  to={{
-                  pathname: "/login"
-                }} 
-               />
-              </Switch>
-            )
-        }
-      </div>
-    )
     return (
-      <App />
+      <div>
+        <Switch>
+          <Route path="/" exact component={() => <HomePageComponent authObj={this.state.authObj} />} />
+          <Route path="/login" exact component={() => <LoginPageComponent handleAuthenticated={this.handleAuthenticated} />} />
+          <Route path="/signup" exact component={() => <SignupPageComponent authObj={this.state.authObj} />} />
+          <Route path="/dashboard" exact component={() => <DashboardPageComponent authObj={this.state.authObj} />} />
+          <Route path="/admin" exact component={() => <AdminPageComponent authObj={this.state.authObj} />} />} />
+        </Switch>
+      </div>
     )
   }
 }

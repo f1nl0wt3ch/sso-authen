@@ -44,9 +44,11 @@ export default class PostsListingComponent extends Component {
       ) : (
         <div style={{ marginTop: 20, padding: 30 }} >
           <Grid container spacing={10} justify="center">
-        { this.state.posts.map( (post,index) => (
+        { 
+          (this.state.posts.length > 0)? this.state.posts.map( (post,index) => (
             <PostComponent key={index} post={post} />
-        ))}
+          )) : ("")
+        }
         </Grid>
       </div>
       )

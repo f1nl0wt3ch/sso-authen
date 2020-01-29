@@ -1,5 +1,5 @@
 {
-  "name": "lutin-client",
+  "name": "client",
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
@@ -28,7 +28,7 @@
     "dev": "npm start && npm .. && npm start",
     "killnode": "sudo killall node"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": "react-app"
   },

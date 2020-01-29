@@ -3,17 +3,6 @@ const bcrypt = require('bcryptjs')
 const key = require('./key')
 
 module.exports = (service, passport) => {
-  // For any request this configuration will check is user authenticated or not
-  passport.serializeUser((user, done) => {
-    done(null, user.id)
-  })
-
-  passport.deserializeUser((id, done) => {
-    // User.findById(id, (err, user) => {
-    //   done(err, user)
-    // })
-  })
-
   switch (service) {
     /*Configure for passport*/
     case "facebook":
@@ -63,13 +52,14 @@ module.exports = (service, passport) => {
     /*Configureure for passport local*/
     default:
       const LocalStrategy = require('passport-local').Strategy
-
-      passport.use(new LocalStrategy({
+      const fieldOptions = {
         usernameField: 'username',
         passwordField: 'password'
-      }, (username, password, done) => {
-        /*Match username or not*/
+      }
+      const verifyCallBack = (username, password, done) => {
+        console.log(`Login form: ${username}:${password}`)
         User.findOne({ email: username }, (err, user) => {
+          /* Match username or not */
           if (err) {
             console.log(`Error: ${err}`)
             return done(err)
@@ -77,9 +67,7 @@ module.exports = (service, passport) => {
           /* user not found */
           if (!user) {
             console.log(`User not matched!`)
-            return done(null, false, {
-              message: 'That email is not registered'
-            })
+            return done(null, false)
           }
           /*Match password*/
           bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -87,15 +75,24 @@ module.exports = (service, passport) => {
             if (isMatch) {
               return done(null, user)
             } else {
-              return done(null, false, {
-                message: 'Password incorrect'
-              })
+              return done(null, false)
             }
           })
+        })
 
-          })
-      })
-      )
+      }
+      const localStrategy = new LocalStrategy(fieldOptions, verifyCallBack)
+      passport.use(localStrategy)
   }
+  // For any request this configuration will check is user authenticated or not
+  passport.serializeUser((user, done) => {
+    done(null, user.id)
+  })
+
+  passport.deserializeUser((id, done) => {
+    // User.findById(id, (err, user) => {
+    //   done(err, user)
+    // })
+  })
 
 }

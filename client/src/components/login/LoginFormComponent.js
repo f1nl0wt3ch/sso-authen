@@ -10,7 +10,9 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 //import green from '@material-ui/core/colors/green'
 import validator from 'validator'
+import { createStore } from 'react-redux'
 
+const REQUEST_VIA_FORM = false
 const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
@@ -84,16 +86,30 @@ export default function LoginFormComponent({handleAuthenticated}) {
   }
 
   const handleOnSubmit = e => {
+      let headers = null, data = null
+      if (REQUEST_VIA_FORM) {
+        let formData = new FormData()
+        formData.append('username', username)
+        formData.append('password', password)
+        data = new URLSearchParams(formData)
+        headers = {}
+      } else {
+          data = {
+            "username": username,
+            "password": password
+          }
+          headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'DELETE, POST, GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+         }
+      }
       fetch('/auth/local/login', {
         method: 'POST',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'DELETE, POST, GET, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
+        headers: headers,
+        body: REQUEST_VIA_FORM? data : JSON.stringify(data)
       })
         .then(res => res.json())
         .then(json => {
