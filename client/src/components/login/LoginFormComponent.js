@@ -58,7 +58,7 @@ const SERVICE_MAP = [
   "Google"
 ]
 
-export default function LoginFormComponent({handleAuthenticated}) {
+export default function LoginFormComponent() {
   const classes = useStyles()
   const [username, setUsername] = React.useState(null)
   const [password, setPassword] = React.useState(null)
@@ -114,7 +114,9 @@ export default function LoginFormComponent({handleAuthenticated}) {
         .then(res => res.json())
         .then(json => {
           console.log(`${JSON.stringify(json)}`)
-          handleAuthenticated(json)
+          localStorage.setItem('auth', json.auth)
+          localStorage.setItem('token', json.token)
+          localStorage.setItem('msg', json.msg)
         })
         .catch(err => console.log(err))
   }

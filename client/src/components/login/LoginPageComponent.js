@@ -15,7 +15,7 @@ export default ({handleAuthenticated}) => {
    return (
       <div className={classes.root}>
          <NavigationComponent />
-         <LoginFormComponent handleAuthenticated={handleAuthenticated}/>
+         <LoginFormComponent />
          <FooterComponent />
       </div>
    )

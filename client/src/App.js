@@ -9,41 +9,30 @@ import DashboardPageComponent from './components/dashboard/DashboardPageComponen
 import SignupPageComponent from './components/signup/SignupPageComponent'
 import HomePageComponent from './components/home/HomePageComponent'
 import AdminPageComponent from './components/admin/AdminPageComponent'
+import PrivateRoute from './components/route/PrivateRoute'
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
-    this.handleAuthenticated = this.handleAuthenticated.bind(this)
     this.state = {
-      authObj: {
-        auth: false,
-        token: null,
-        msg: ""
-      }
+      auth: localStorage.getItem('auth') || false,
+      token: localStorage.getItem('token') || null,
+      msg: localStorage.getItem('msg') || ""
     }
-  }
-
-  handleAuthenticated = res => {
-    //console.log(`${JSON.stringify(res)}`)
-    this.setState({
-      authObj: {
-        auth: res.auth,
-        token: res.token,
-        msg: res.msg
-      }
-    })
   }
 
   render() {
     return (
       <div>
+        {
         <Switch>
-          <Route path="/" exact component={() => <HomePageComponent authObj={this.state.authObj} />} />
-          <Route path="/login" exact component={() => <LoginPageComponent handleAuthenticated={this.handleAuthenticated} />} />
-          <Route path="/signup" exact component={() => <SignupPageComponent authObj={this.state.authObj} />} />
-          <Route path="/dashboard" exact component={() => <DashboardPageComponent authObj={this.state.authObj} />} />
-          <Route path="/admin" exact component={() => <AdminPageComponent authObj={this.state.authObj} />} />} />
-        </Switch>
+            <Route path="/" exact component={() => <HomePageComponent {...this.state} />} />
+            <Route path="/login" exact component={() => <LoginPageComponent />} />
+            <Route path="/signup" component={() => <SignupPageComponent {...this.state} />} />
+            <Route path="/dashboard" component={() => <DashboardPageComponent {...this.state} />} />
+            <Route path="/admin" component={() => <AdminPageComponent {...this.state} />} />} />
+         </Switch>
+        }
       </div>
     )
   }

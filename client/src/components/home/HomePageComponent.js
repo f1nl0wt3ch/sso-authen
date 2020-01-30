@@ -23,7 +23,7 @@ export default (props) => {
    return (
       <div className={classes.root}>
          <NavigationComponent />
-         <PostsListingComponent authObj={props.authObj}/> 
+         <PostsListingComponent {...props}/> 
          <FooterComponent />
       </div>
    )

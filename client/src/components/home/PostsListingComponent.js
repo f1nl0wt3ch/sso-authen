@@ -9,7 +9,7 @@ export default class PostsListingComponent extends Component {
      this.state = {
         posts: [],
         isLoading: false,
-        token: this.props.authObj.token
+        token: this.props.token
      }
   }
 
