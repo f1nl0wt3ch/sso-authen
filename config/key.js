@@ -18,8 +18,8 @@ module.exports = {
     callbackURL: "/api/auth/google/callback"
   },
   linkedinConfig: {
-    consumerKey: "77l4zzb6jbuj1x",
-    consumerSecret: "cxuW9NfJLHnouyrd",
+    consumerKey: "77f0sz4mhr6l89",
+    consumerSecret: "iAr4anqqhcoaKy8U",
     callbackURL: "/api/auth/linkedin/callback",
     profileFields: ['id', 'firstName','lastName', 'profilePicture']
   },
